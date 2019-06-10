@@ -11,8 +11,8 @@ Listnode(const T& x=T()):
 };
 template<class T,class Ref,class Ptr>
 struct _Listiterator{
-  typedef Listnode<T> Node;
-typedef  _Listiterator<T,Ref,Ptr>Self;
+  typedef Listnode<T> Node;//将listNode<T>定义成Node
+typedef  _Listiterator<T,Ref,Ptr> Self;//将_Listitertor<T,T&,T*>  定义成self
 Node* _node;
 _Listiterator(Node* node):_node(node)
   {}
@@ -66,12 +66,18 @@ return const_iterator(_head->next);
 const_iterator end()const
 {
 return const_iterator(_head);
-//return (iterator)_head;
+//return _head;//node*  和迭代器为什么可以支持?单参数的构造函数的类支持强制类型的隐式转换
+//迭代器就是单参数构造函数的类参数是node* 可以自动隐式转换成迭代器类型
+//eg:strings1("Nihao")  string s2="world",
+//v.PushBack(std::string "11111")
+//v.PushBack("11111");
 }
 iterator end(){
 return iterator(_head);
 }
-
+void PopBack(){
+Erase(--end());//临时对象返回值的临时对象的迭代器,对迭代器里面值--然后还给erase
+}
 void PushBack(const T& x){
   Node* tail=_head->preve;
   Node* newnode=new Node(x);
