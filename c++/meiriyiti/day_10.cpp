@@ -12,6 +12,7 @@ bool check(vector<vector<int> >a){
     if(sum==row){
       return true;
     }
+    return false;
   }
   for(i=0;i<row;++i){
     sum=0;
@@ -19,7 +20,17 @@ bool check(vector<vector<int> >a){
     if(sum==row){
       return true;
     }
+    return false;
   }
+  for(i=0;i<row;++i){//反对角线
+    sum=0;
+    sum+=a[i][row-i-1];
+    if(sum==row){
+      return true;
+    }
+    return false;
+  }
+
   for(i=0;i<row;++i){//检查每一行是否相等
     sum=0;
     for(j=0;j<row;++j){
@@ -28,6 +39,7 @@ bool check(vector<vector<int> >a){
     if(sum==row){
       return true;
     }
+  return false;
   }
   return false;
 }
