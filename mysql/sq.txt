@@ -1,0 +1,82 @@
+tetable test2(data float(4,2);
+  insert into test2 values((81.22),(22));//上限在-99~+99
+ create table test2(data float(str char(256));//不行上限255
+  create table test2(data float(str char(256));//不行上限21844，db32766,varchar有长度的记录
+  -->最后一个添加TIMESTAMP显示数字（显示为年月日时分秒）
+        create test2 values(gender enmu('男'，'女'，'未知'));//上限在-99~+99
+        insert into test2 values('男');
+     enum插入数据必须是它里面有的
+        insert into test2 values('变态');//不行
+        not null
+        create table test2(
+          id int not null,
+          name varchar(10) not null,
+          sex varchar(3);
+
+          );
+        desc test2;-->看表的属性，第三个是否为空
+        intsert  into  test2(id,name,sex) value(1,'蔡徐坤'，'女');//第一行
+        intsert  into  test2(id,name) value(1,'蔡徐坤');//第2行可以
+        defalut
+        create table test2 (
+          id int not null;
+          name varchar(20) not null,
+          age int unsigned default 18,
+          sex char(2) default '男//18和空属性不冲突，男也是默认值18
+          );
+        复合主键
+        create table tt14(
+            -> id int unsigned,
+            -> course char(10) comment '课程代码',
+            -> score tinyint unsigned default 60 comment '成绩',
+            -> primary key(id, course) -- id和course为复合主键
+
+
+            create table goods(
+              goods_id int unsigned primary key  atuo_increment comment"商品编号";
+              goods_name varchar (128) not null comment "商品名称",
+              uniprice float(8,2) not null defalut 0.00,//8位999999.99,默认给0.00元
+              category varchar(32) comment "商品分类;
+              provider varchar(64) not null ,
+              //primary key(goods_id,goods_name,uniprice)
+              );
+            insert into goods value(1,"篮球",200,"体育用具","蔡徐坤有限公司",'2019-01-01');
+            select *from \G
+            create table customer(
+              customer_id int unsigned primary key,
+              name varchar(20) not null,
+              address varchar(256) not null,
+              email varchar(126) unique,//不能重复
+           sex enum("男","女")not null ,
+              car_id char(18) uique key //身份证号18位不是必须填的
+              //primary key(customer_id,name,address)
+              //foreign key(goods_id)infernce (customer_id)
+
+              );
+
+            purchase(
+                order_id int unsigned primary key,
+                customer_id int unsigned  not null,
+                nums unsigned int not null ,
+                goods_id int unsigned not null,
+                nums unsigned int not null defalut 1,
+                foreign key(customer_id) renfernces customer(customer_id),
+                foreign key(customer_id) renfernces customer(customer_id),
+                foreign key(goods_id) renfernces goods(goods_id),
+
+
+                );
+            show tables;
+            desc constomer;
+            //公共厕所的数据库,上厕所的时间来判断
+            //选择合适的变量类型,熟悉主键外键和各种约束
+            alter table
+            //增列加时间戳,生产日期
+            在商品加生产日期
+            alter table goods add column product_data date ;//取date类型
+            insert into goods value(1,"篮球",200,)
+
+            ")"
+            )
+            )'
+            ))))
