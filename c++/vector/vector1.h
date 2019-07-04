@@ -54,7 +54,7 @@ const T& operator[](size_t pos)const
 return _start[pos];
 }
 void Reserve(size_t n){
-  //开空间
+  //开空间-->提前开好空间
   if(n>Capacity()){
 size_t size=Size();
 T*newarray=new T[n];
@@ -63,13 +63,15 @@ if(_start){
   memcpy(newarray,_start,sizeof(T)*Size());
 }
 delete[]_start;
-//赋值
+//释放旧空间
+//将指向旧空间的位置指向新空间
 _start=newarray;
 _finish=newarray+size;
 _end_of_storge=_start+n;
   }
 }
 void Resize(size_t n,const T& val=T()){
+  //开空间的同时初始化(给缺省值)
   if(n<=Size()){
     _finish=_start+n;
   }
@@ -85,8 +87,8 @@ void Pushback(const T x){
  if((newcapacity=Capacity()==0)||(newcapacity=Capacity()==4)){
 newcapacity=Capacity()*2;
 Reserve(newcapacity);
-*_finish=x;
-++*_finish;//后面添加成x
+*_finish=x;//最后一个插入的是x
+++*_finish;//finish变成finish+1的位置
  }
   }
 }
@@ -94,23 +96,29 @@ Reserve(newcapacity);
 void Insert(iterator pos,const T&x){
 assert(pos<_finish);
 if(_finish==_end_of_storge){
-  size_t n=pos-_start;
+  //插入的数据刚到等于容量大小时候-->需要扩容
+  size_t n=pos-_start;//记录插入的位置--->从第几个位置插入的数据
   size_t newcapacity;
  if((newcapacity=Capacity()==0)||(newcapacity=Capacity()==4)){
 newcapacity=Capacity()*2;
   Reserve(newcapacity);
   pos=_start+n;
+  //在扩容以后pos位置指向的是原来旧的位置然后找到扩容后pos要变成新位置的第几个
+  //位置插入数据的位置
 }
 }
+//在扩容后找到之前end的位置把end位置上的元素移动到end+1上
 iterator end=_finish-1;
 while(end>=pos){
-  *(end+1)=*end;
+  *(end+1)=*end;//扩容后end位置元素变成end+1了
   --end;
 }
 *pos=x;
 ++_finish;
+//在将数据移动完后将将迭代器end(finish+1)
 }
-iterator Erase  (iterator pos){
+//迭代器删除会失效解决迭代器的失效问题,返回的是删除pos点的位置
+iterator Erase (iterator pos){
 assert(pos<_finish);
 iterator it=pos;
 while(pos<_finish-1){
@@ -120,6 +128,7 @@ while(pos<_finish-1){
 --_finish;
 return pos;
 }
+//最后删除一个元素
 void Popback(){
   assert(_finish>_start );
     --_finish;
@@ -133,7 +142,7 @@ size_t Size()const
 return _finish-_start;
 }
   private:
-iterator _start;
-iterator _finish;
-iterator _end_of_storge;
+iterator _start;//指向数据开始位置
+iterator _finish;//指向数据结束的位置
+iterator _end_of_storge;//指向存储容量的尾部
 };

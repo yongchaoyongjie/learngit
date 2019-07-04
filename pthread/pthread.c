@@ -5,10 +5,11 @@
 #include <pthread.h>
 void *thr_start(void *argv){
   while(1){
+    sleep(1);
     printf("i am child\n");
   }
 }
-int main(int argv,char *argv[]){
+int main(int argc,char *argv[]){
   //int pthread_create(pthread_t*thread, 
   //const pthread_attr_t *attr, 
   //void *(*start_routine)(void *), void *arg);

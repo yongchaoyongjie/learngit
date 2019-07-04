@@ -61,14 +61,17 @@
 #	
 #clean:
 #	rm $(bin) $(obj)
-bin=./main 
-src=$(wildcard ./*.c)#wildcard为关键字命令获取当前目录下以.c结尾的文件名,用$()表示让它执行这个命令
-obj=$(patsubst %.o, %.c, $(src))#patsubst命令将src当中内容把.c替换成.o
-#若当前目录下有main.c和child.c则经过这个命令就成了main.o和child.o
-$(bin):$(obj)
-	gcc $^ -o $@
-%.o:%.c
-	gcc -c $< -o $@
-.PHONY :clean
-	rm $(bin) $(obj)
-
+#bin=./main 
+#src=$(wildcard ./*.c)#wildcard为关键字命令获取当前目录下以.c结尾的文件名,用$()表示让它执行这个命令
+#obj=$(patsubst %.o, %.c, $(src))#patsubst命令将src当中内容把.c替换成.o
+##若当前目录下有main.c和child.c则经过这个命令就成了main.o和child.o
+#$(bin):$(obj)
+#	gcc $^ -o $@
+#%.o:%.c
+#	gcc -c $< -o $@
+#.PHONY :clean
+#	rm $(bin) $(obj)
+kuaipai:kuaipai.c
+	gcc  $^ -o $@
+chuangjianshu:chuangjianshu.c
+	gcc  $^ -o $@

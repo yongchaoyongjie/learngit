@@ -27,8 +27,8 @@ if(ret!=0){
   return -1;
 }
 while(1){
-  printf("hello world\n");
   sleep(1);
+  printf("hello world\n");
 }
   return 0;
 }

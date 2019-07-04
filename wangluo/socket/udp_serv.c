@@ -46,49 +46,52 @@ int main(){
   //4个字节整型数据的主机字节序到网络字节序的转换
   //htonl()//长整型的转换
   //addr.sin_addr.s_addr=htonl(0xc0a87a87);//地址信息,主机字节序小端需要将地址信息转换为
-  addr.sin_addr.s_addr=inet_addr("192.168.122.135");
+  addr.sin_addr.s_addr=inet_addr("192.168.96.128");
   //int_addr_t inet_addr(const char*cp)点分十进制的字符串ip地址直接转换成为网络字节序的ip地址
   //大端,存储长度大于1个字节它是4个字节需要进行转换,9000也是是short类型
   //unint32_t的数据直接赋值字符串不可以,把点分十进制的ip信息转换为16进制数字
   //192.168.122.135--->16进制为0xc0 a8  7a 87
   socklen_t len=sizeof(struct sockaddr_in);
-  int ret=bind(socketfd,(struct sockaddr*)&addr,&len);//类型不一样强转
+  int ret=bind(socketfd,(struct sockaddr*)&addr,len);//类型不一样强转,定义的是
+  //sockaddr_in 但是要求是sockaddr*
   if(ret<0){
     perror("bind error\n");
     return -1;
   }
-  //3接受数据
-  //ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-  //struct sockaddr *src_addr, socklen_t *addrlen);
-  //sockfd:套接字描述符buf:要接收的数据len要接受的数据长度
-  //flags里面MSG_DONTWAIT使操作变为一个非阻塞操作没有数据则直接报错返回错误
-  //信息为EAGAIN 或者EWOULDBLOCK
-  //flags:0
-  //默认阻塞 MSG_PEEK(从接受队列里找出队首数据进行返回)探测性接受数据
-  //从缓冲区接受数据但是并不从缓冲区移除掉意味着下次接收数据的时候依然
-  //接受的是这条数据-->想接受某种数据的时候探测性的接受一下看数据是否
-  //完整(是不是自己想要的数据)完整则接受不完整则不接收
-  //src_addr接受数据每条数据都有源地址源端口需要知道到底谁发的才能给谁
-  //回就是源地址信息
-  //addrlen源地址信息长度(复合长度必须指定长度,接收多长并返回实际接收长
-  //度)给0接收长度为0不会接收地址信息给太长地址信息地址信息没有这么长
-  //返回真实的地址信息长度(输入输出复合参数)返回值:返回数据的实际接
-  //收数据长度失败:-1
-  char buff[1024]={0};//一定要初始化
-  struct sockaddr_in cli_addr;
-  recvfrom(socketfd,buff,1023,0,(struct sockaddr*)&cli_addr,&len);
-  printf("client say:%s\n",buff);
-  //发送数据
-  // ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-  //const struct sockaddr *dest_addr, socklen_t addrlen);
-  //sickfd:套接字描述符 buf:要发送的数据len要发送的数据长度 flag:0默认阻
-  //塞dest_addr:要发送的对端地址,对于服务端来说都是客户端-->客户端的地址
-  //信息add_rlen地址信息长度返回值:实际发送的字节长度失败:-1
-  memset(buff,0x00,1024);//数据清空
-  scanf("%s",buff);//获取字符串
-  sendto(socketfd,buff,strlen(buff),0,
-   (struct sockaddr*)&cli_addr,len);
-  printf("sever say:%s\n",buff);
+  while(1){
+    //3接受数据
+    //ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+    //struct sockaddr *src_addr, socklen_t *addrlen);
+    //sockfd:套接字描述符buf:要接收的数据len要接受的数据长度
+    //flags里面MSG_DONTWAIT使操作变为一个非阻塞操作没有数据则直接报错返回错误
+    //信息为EAGAIN 或者EWOULDBLOCK
+    //flags:0
+    //默认阻塞 MSG_PEEK(从接受队列里找出队首数据进行返回)探测性接受数据
+    //从缓冲区接受数据但是并不从缓冲区移除掉意味着下次接收数据的时候依然
+    //接受的是这条数据-->想接受某种数据的时候探测性的接受一下看数据是否
+    //完整(是不是自己想要的数据)完整则接受不完整则不接收
+    //src_addr接受数据每条数据都有源地址源端口需要知道到底谁发的才能给谁
+    //回就是源地址信息
+    //addrlen源地址信息长度(复合长度必须指定长度,接收多长并返回实际接收长
+    //度)给0接收长度为0不会接收地址信息给太长地址信息地址信息没有这么长
+    //返回真实的地址信息长度(输入输出复合参数)返回值:返回数据的实际接
+    //收数据长度失败:-1
+    char buff[1024]={0};//一定要初始化
+    struct sockaddr_in cli_addr;
+    recvfrom(socketfd,buff,1023,0,(struct sockaddr*)&cli_addr,&len);
+    printf("client say:%s\n",buff);
+    //发送数据
+    // ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
+    //const struct sockaddr *dest_addr, socklen_t addrlen);
+    //sickfd:套接字描述符 buf:要发送的数据len要发送的数据长度 flag:0默认阻
+    //塞dest_addr:要发送的对端地址,对于服务端来说都是客户端-->客户端的地址
+    //信息add_rlen地址信息长度返回值:实际发送的字节长度失败:-1
+    memset(buff,0x00,1024);//数据清空
+    scanf("%s",buff);//获取字符串
+    sendto(socketfd,buff,strlen(buff),0,
+        (struct sockaddr*)&cli_addr,len);
+    printf("sever say:%s\n",buff);
+  }
   close(socketfd);
   return 0;
 }

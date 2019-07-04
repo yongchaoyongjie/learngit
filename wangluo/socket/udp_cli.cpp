@@ -28,7 +28,7 @@ class UdpSocket{
       }
       return true;
     }
-    //2为套接字保定地址信息//ip地址和端口
+    //2为套接字绑定地址信息//ip地址和端口
     bool Bind(std::string &ip,uint16_t port){
       sockaddr_in addr;
       addr.sin_family=AF_INET;//地址域
@@ -86,18 +86,22 @@ int main(){
   sockaddr_in serv_addr;//服务端的地址
   serv_addr.sin_family=AF_INET;
   serv_addr.sin_port=htons(9000);
-  serv_addr.sin_addr.s_addr=inet_addr("192.168.122.135");
+  serv_addr.sin_addr.s_addr=inet_addr("192.168.96.128");
   while(1){
     //绑定数据有操作系统自己绑定,然后发数据
-    char buf[1024]={0};
-    std::string str;
-    std::cin>>str;
-    sock.Send(str.c_str(),str.length(),&serv_addr);//str.const_str
-    //接收
+    //std::string str;
+    //std::cin>>str;
+    //sock.Send(str.c_str(),str.length(),&serv_addr);//str.const_str
+    //std::cout<<"client say:"<<str<<std::endl;
     char buff[1024]={0};
+    scanf("%s[^\n]",buff);//获取一行
+    sock.Send(buff,strlen(buff),&serv_addr);
+    printf("client say :%s\n",buff);
+    //接收
+    char buf[1024]={0};
     sock.Recv(buf,1024);//地址可以不需要
-    printf("server say :%s\n",buff);
-  }
+    printf("server buf:%s\n",buf);
+  } 
   sock.IsClose();
   return 0;
 }

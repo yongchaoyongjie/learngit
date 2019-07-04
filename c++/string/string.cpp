@@ -49,14 +49,23 @@ cout<<"capacity:"<<str1.capacity()<<endl;
 //只改变了个数size但是容量是无法缩小的
 
 }
+void test6(){
+  std::string s;
+  s.resize(100);
+  cout<<"size resize:"<<s.size()<<endl;
+  cout<<"capacity resize"<<s.capacity()<<endl;
+   s.resize(50);
+   cout<<"缩小后的size"<<s.size()<<endl;
+   cout<<"capacity"<<s.capacity()<<endl;
+}
 void test2(){
   std::string s;
   s.reserve(100);
-  cout<<s.size()<<endl;
-  cout<<s.capacity()<<endl;
+  cout<<"reserve size"<<s.size()<<endl;
+  cout<<"reserve capacity"<<s.capacity()<<endl;
    s.reserve(50);
-   cout<<s.size()<<endl;
-   cout<<s.capacity()<<endl;
+   cout<<"size reserve"<<s.size()<<endl;
+   cout<<"reserve capacity"<<s.capacity()<<endl;
    //reverse容量可以缩小
 }
 void test3(){
@@ -87,11 +96,26 @@ str+=" abc";//追加字符串
 str=str+" ac";
 cout<<str<<endl;
 }
+void test5(){
+  //length和size没有区别?c_str(),打印字符串
+  std::string str1("nihaoshijie");
+  cout<<"length:"<<str1.length()<<endl;
+  cout<<"size:"<<str1.size()<<endl;
+  cout<<"c_str():"<<str1.c_str()<<endl;
+  cout<<str1<<endl;
+  str1.clear();
+  cout<<"length:"<<str1.length()<<endl;
+  cout<<"size:"<<str1.size()<<endl;
+  cout<<"c_str():"<<str1.c_str()<<endl;
+  cout<<str1<<endl;
+}
 int main(){
 //test();
 //teststring();
-//test2();
+test6();
+test2();
 //test3();
-test4();
+//test4();
+//test5();
   return 0;
 }

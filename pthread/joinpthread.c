@@ -21,6 +21,6 @@ int main(int argc,char*argv[]){
   }
   pthread_cancel(tid);//异常退出不具备评判标准,返回值没有任何价值
   char*ptr=NULL;
-  pthread_join(tid,(void**)&ptr);//取地址修改自身
+  pthread_join(tid,(void**)&ptr);//取地址修改自身,定义的为(void* the_start)char*修改它就用char**
   printf("返回值:%d\n",(int)ptr);
 }

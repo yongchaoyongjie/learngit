@@ -60,7 +60,7 @@ void test(){
   for(int i=0;i<5;i++){
     sum+=fun(A(i));
   }
-  cout<<sum<<endl;
+  cout<<sum<<endl;//15
 }
 int test2(int a,int b){
   //最小公倍数 = 两数之积除以最大公约数，这里使用碾转相除法进行最大公约数的求

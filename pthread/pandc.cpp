@@ -63,7 +63,8 @@ void* thr_consumer(void *arg){
     //消费者
     int data;
    if(q->Queuepop(&data)){
-      printf("get data :%d\n",data);
+     // printf("get data :%d\n",data);
+      std::cout<<"get data"<<data<<std::endl;
    }
   }
   return NULL;
@@ -73,6 +74,7 @@ void* thr_product(void *arg){
   while(1){
     int i=0;//生产者放数据
     printf("put data:%d\n",i);
+ std::cout<<"put data"<<i<<std::endl;
   q->QueuePush(i);//i++先使用,打印多少代表放了多少
   i++;
   usleep(100000);

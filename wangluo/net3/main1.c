@@ -17,6 +17,7 @@ if(fd<0){
 write(fd,(void*)buff,sizeof(int));
 int b=-1;
 read(fd,(void*)&b,sizeof(int));//存了什么对象以什么格式存了一个对象解析就以
+//存的时候(写)(void*)那么读的时候也要(void*)
 //什么格式解析称为反序列化-->以二进制存就以二进制进行反序列化-->如果是结构体
 //解析就是结构推荐解析
 printf("%d\n",b);

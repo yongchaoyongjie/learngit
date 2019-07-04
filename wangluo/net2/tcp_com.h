@@ -102,7 +102,8 @@ class TcpSocket{
         ssize_t s=send(_socketfd,buf+slen,len-slen,0);
         if(s<0){
           if(errno==EINTR||errno==EAGAIN){
-            //EINTR操作被信号产生打断-->没传送完就是出错-->信号打断产生的错误-->适用场景在非阻塞场景
+ //EINTR操作被信号产生打断-->没传送完就是出错-->信号打断产生的错误-->
+ //适用场景在非阻塞场景
             continue;
           }
           //EAGAIN/EWOULDBLOCK-->错误原因叫当前在接受发送数据的时候

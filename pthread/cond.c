@@ -27,6 +27,7 @@ void* the_sale(void*arg){
     //有面没人吃等待
     if(is_have_noodle!=0){
       pthread_cond_wait(&cond,&mutex);//wait实现了原子操作先解锁后休眠的操作,有可能还没来得及挂起就已经唤醒等于白唤醒导致死等
+      //prhread_cond_wait 集合了解锁等待加锁
     }
     printf("sale---make noodles\n");
     is_have_noodle +=1;
