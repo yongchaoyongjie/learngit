@@ -143,26 +143,34 @@ Node*subr=parent->_right;
 Node*subrl=subr->_right;
 int bf=subrl->_bf;
 zuoxuan(parent->_left);
-zuoxuan(parent);
+youxuan(parent);
 if(bf==0){
   parent->_bf=subr->_bf=subrl->bf=0;
+}
+else if(bf==1){
+ subr->_bf=-1; 
+}
+else if(bf==-1){
+ parent->bf=1; 
 }
 
 }
 void youxuanzuoxuan(Node*parent){
+  //旋转前保存平衡因子旋转完成后对相应的平衡因子进行调整
 Node*subr=parent->_right;
 Node*subrl=subr->_left;
 int bf=subrl->_bf;
 youxuan(parent->_right);
 zuoxuan(parent);
 //旋转前sublr的平衡因子可能是0,-1,1
+//调整后parent右树,subl左树
 if(bf==0){
   parent->_bf=subr->_bf=subrl->bf=0;
 }
 else if (bf==1){
- parent->_bf=-1;//调整后它从-1变成0
- subrl->_bf=0;//调整后它从0变成1;
- subr->bf=0;//从1调整为0
+ parent->_bf=-1;
+ subrl->_bf=0;
+ subr->bf=0;
 }
 else if(bf==-1){
   parent->_bf=0;
@@ -183,6 +191,36 @@ void _Inorder(Node*root){
     cout<<root->_kv.first<<" ";
     InOrder(root->_right);
   }
+}
+int height(Node*root){
+  if(root==nullptr){
+    return 0;
+  }
+  int leftheight=height(root->_left);
+  int rightheight=height(root->_right);
+  if(leftheight>rightheight){
+  return leftheight+1;
+  }
+  return rightheight+1;
+}
+bool isbalancetree(){
+  return _isbalancetree(_root);
+}
+bool _isbalancetree(Node*root){
+  if(root==nullptr){
+    return true;
+  }
+  int leftheight=height(root->_left);
+  int rightheight=height(root->_right);
+  if(rightheight->leftheight!=root->_bf){
+cout<<root->_kv.first<<"平衡因子异常"<<endl;
+return false;
+  }
+  
+    if((leftheight-rightheight<2)&&(leftheight-rightheight>-2)&&
+        isbalancetree(root->_left)&&isbalancetree(root->_right)){
+ return true;     
+    }
 }
   private:
     Node* _root;
